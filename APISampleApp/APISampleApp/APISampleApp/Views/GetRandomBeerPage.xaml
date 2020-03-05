@@ -9,7 +9,7 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Margin="35">
-                <Label Text="{Binding randomBeer.Data.Name}"
+                <Label Text="{Binding RandomBeer.Data.Name}"
                 TextColor="Black"
                 FontSize="25"
                 FontAttributes="Bold"
@@ -29,7 +29,7 @@
                        HorizontalOptions="StartAndExpand"
                        VerticalOptions="Start"/>
 
-                <Label Text="{Binding randomBeer.Data.Style.Name}"
+                <Label Text="{Binding RandomBeer.Data.Style.Name}"
                        TextColor="Gray"
                        FontSize="15"
                        FontAttributes="Italic" 
@@ -44,7 +44,7 @@
                        HorizontalOptions="StartAndExpand"
                        VerticalOptions="Start"/>
 
-                <Label Text="{Binding randomBeer.Data.Style.Description}"
+                <Label Text="{Binding RandomBeer.Data.Style.Description}"
                        TextColor="Gray"
                        FontSize="15"
                        FontAttributes="Italic"

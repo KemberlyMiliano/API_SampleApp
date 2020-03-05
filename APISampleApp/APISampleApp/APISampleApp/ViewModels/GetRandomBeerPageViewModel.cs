@@ -16,7 +16,7 @@ namespace APISampleApp.ViewModels
     public class GetRandomBeerPageViewModel : INotifyPropertyChanged
     {
         IApiService _apiService = new ApiService();
-        public RandomBeer randomBeer { get; set; } = new RandomBeer();
+        public RandomBeer RandomBeer { get; set; } = new RandomBeer();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -26,6 +26,7 @@ namespace APISampleApp.ViewModels
             GetDataCommand = new Command(async () =>
             {
                 await GetDataAysnc();
+                //await CallApiRefit();
 
             });
 
@@ -36,8 +37,7 @@ namespace APISampleApp.ViewModels
             {
                 try
                 {
-                    //CallApiRefit();
-                    randomBeer = await _apiService.GetRandomBeerAsync();
+                    RandomBeer = await _apiService.GetRandomBeerAsync();
                 }
                 catch (Exception ex)
                 {
@@ -53,9 +53,24 @@ namespace APISampleApp.ViewModels
 
         async Task CallApiRefit()
         {
-            var apiResponse = RestService.For<IApiServiceRefit>(Constants.BaseUrl);
-            var beer = await apiResponse.GetRandomBeerRefit();
-            randomBeer = beer;
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            {
+                try
+                {
+                    var apiResponse = RestService.For<IApiServiceRefit>(Constants.BaseUrl);
+                    var beer = await apiResponse.GetRandomBeerRefit();
+                    RandomBeer = beer;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"API EXCEPTION {ex}");
+                }
+
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert(Constants.NullMessage, Constants.AlertMessage, Constants.CancelMessage);
+            }
 
         }
     }
